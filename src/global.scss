@@ -35,3 +35,25 @@
 /* @import "@ionic/angular/css/palettes/dark.always.css"; */
 /* @import "@ionic/angular/css/palettes/dark.class.css"; */
 @import '@ionic/angular/css/palettes/dark.system.css';
+
+@font-face {
+    font-family: 'AvenirBook';
+    src: url('assets/fonts/avenir-book.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'AvenirMedium';
+    src: url('assets/fonts/avenir-medium.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+.font-primary {
+    font-family: 'AvenirMedium', sans-serif;
+}
+
+.font-secondary {
+    font-family: 'AvenirBook', sans-serif;
+}
