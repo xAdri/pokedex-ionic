@@ -10,6 +10,8 @@ import {
   provideIonicAngular
 } from '@ionic/angular/standalone';
 
+import { provideHttpClient } from '@angular/common/http';
+
 import { addIcons } from 'ionicons';
 import {
   arrowBackOutline,
@@ -36,6 +38,7 @@ bootstrapApplication(AppComponent, {
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     provideIonicAngular(),
+    provideHttpClient(),
     provideRouter(routes, withPreloading(PreloadAllModules)),
   ],
 });

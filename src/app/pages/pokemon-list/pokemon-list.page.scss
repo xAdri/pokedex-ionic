@@ -1,0 +1,34 @@
+.info-item {
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    justify-content: center;
+    margin: 8px 0;
+}
+
+.pokemon-image {
+    width: 64px;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 16px;
+}
+
+.pokemon-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+
+.pokemon-types {
+    display: flex;
+    gap: 8px;
+    margin-top: 4px;
+    margin-left: auto;
+}
+
+.pokemon-text {
+    font-size: 22px;
+}

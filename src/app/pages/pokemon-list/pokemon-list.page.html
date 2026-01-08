@@ -5,7 +5,33 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
+  <ion-list>
+    @for (p of pokemons; track p.url) {
+    <ion-item>
+      <div class="pokemon-image">
+        <img [src]="getSpriteUrl(getPokemonIdFromUrl(p.url))" [alt]="p.name" loading="lazy" />
+      </div>
 
+      <div class="info-item">
+        <ion-label class="font-primary pokemon-text">
+          {{ p.name | titlecase }}
+        </ion-label>
+
+        <ion-note class="font-primary pokemon-text">
+          {{ formatId3(getPokemonIdFromUrl(p.url)) }}
+        </ion-note>
+      </div>
+
+      <div class="pokemon-types">
+        <ion-icon name="person-outline"></ion-icon>
+      </div>
+    </ion-item>
+    }
+  </ion-list>
+
+  <ion-infinite-scroll (ionInfinite)="onIonInfinite($event)" threshold="100px" [disabled]="allLoaded">
+    <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Cargando más..."></ion-infinite-scroll-content>
+  </ion-infinite-scroll>
 </ion-content>
 
 <app-navbar></app-navbar>
