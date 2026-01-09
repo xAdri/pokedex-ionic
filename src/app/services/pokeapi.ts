@@ -9,6 +9,7 @@ import {
 @Injectable({
   providedIn: 'root',
 })
+
 export class Pokeapi {
   private readonly baseUrl = 'https://pokeapi.co/api/v2';
 
@@ -21,4 +22,10 @@ export class Pokeapi {
     const url = `${this.baseUrl}/pokemon?limit=${limit}&offset=${offset}`;
     return this.http.get<PokemonListResponse>(url);
   }
+
+  getPokemonDetailsById(id: number): Observable<any> {
+    const url = `${this.baseUrl}/pokemon/${id}`;
+    return this.http.get<any>(url);
+  }
+
 }

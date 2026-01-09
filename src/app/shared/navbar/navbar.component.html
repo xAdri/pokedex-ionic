@@ -1,17 +1,26 @@
-<ion-footer>
-  <ion-toolbar>
+<ion-footer [translucent]="true">
+  <ion-toolbar class="gradient-background">
     <ion-buttons slot="start" class="navbar-buttons">
 
-      <ion-button href="/pokemon-list">
-        <ion-icon name="list-outline"></ion-icon>
+      <ion-button href="/pokemon-list" fill="clear" class="nav-button">
+        <div class="nav-content">
+          <ion-icon name="list-outline"></ion-icon>
+          <span class="nav-text active-color">Pokémon</span>
+        </div>
       </ion-button>
 
-      <ion-button href="/favorites">
-        <ion-icon name="heart-outline"></ion-icon>
+      <ion-button href="/favorites" fill="clear" class="nav-button">
+        <div class="nav-content">
+          <ion-icon name="heart-outline"></ion-icon>
+          <span class="nav-text font-primary active-color">Favorites</span>
+        </div>
       </ion-button>
 
-      <ion-button href="/profile">
-        <ion-icon name="person-outline"></ion-icon>
+      <ion-button href="/profile" fill="clear" class="nav-button">
+        <div class="nav-content">
+          <ion-icon name="person-outline"></ion-icon>
+          <span class="nav-text active-color">Team</span>
+        </div>
       </ion-button>
 
     </ion-buttons>

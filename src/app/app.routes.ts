@@ -18,4 +18,8 @@ export const routes: Routes = [
     path: '**',
     redirectTo: 'home'
   },
+  {
+    path: 'minigame',
+    loadComponent: () => import('./pages/minigame/minigame.page').then( m => m.MinigamePage)
+  },
 ];

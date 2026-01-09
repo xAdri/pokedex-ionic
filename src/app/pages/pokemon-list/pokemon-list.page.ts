@@ -2,25 +2,17 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
-import {
-  IonContent,
-  IonHeader,
-  IonTitle,
-  IonToolbar,
-  IonList,
-  IonItem,
-  IonLabel,
-  IonInfiniteScroll,
-  IonInfiniteScrollContent,
-  IonNote,
-  IonIcon
-} from '@ionic/angular/standalone';
+import { IonContent, IonHeader, IonTitle, IonToolbar, IonList, IonItem, IonLabel, IonInfiniteScroll, IonInfiniteScrollContent, IonNote, IonIcon, IonInput, IonSearchbar, IonButton, IonText } from '@ionic/angular/standalone';
 
 import { NavbarComponent } from '../../shared/navbar/navbar.component';
 
-// 👇 Servicio + interfaces
 import { PokemonListItem, PokemonListResponse } from '../../core/interfaces/pokemon.interface';
 import { Pokeapi } from 'src/app/services/pokeapi';
+
+type PokemonRow = PokemonListItem & {
+  id: number;
+  types: string[];
+};
 
 @Component({
   selector: 'app-pokemon-list',
@@ -30,7 +22,6 @@ import { Pokeapi } from 'src/app/services/pokeapi';
   imports: [
     IonContent,
     IonHeader,
-    IonTitle,
     IonToolbar,
     IonList,
     IonItem,
@@ -41,18 +32,40 @@ import { Pokeapi } from 'src/app/services/pokeapi';
     FormsModule,
     NavbarComponent,
     IonNote,
-    IonIcon
-  ],
+    IonSearchbar,
+    IonText
+],
 })
 export class PokemonListPage implements OnInit {
-  pokemons: PokemonListItem[] = [];
+  pokemons: PokemonRow[] = [];
 
   private readonly pageSize = 25;
-  private readonly maxItems = 151;
+  private readonly maxItems = 1025;
 
   private offset = 0;
   allLoaded = false;
   loading = false;
+
+  private readonly TYPE_ICON_MAP: Record<string, string> = {
+    normal: 'normal',
+    fire: 'fire',
+    water: 'water',
+    electric: 'electric',
+    grass: 'grass',
+    ice: 'ice',
+    fighting: 'fighting',
+    poison: 'poison',
+    ground: 'ground',
+    flying: 'flying',
+    psychic: 'psychic',
+    bug: 'bug',
+    rock: 'rock',
+    ghost: 'ghost',
+    dragon: 'dragon',
+    dark: 'dark',
+    steel: 'steel',
+    fairy: 'fairy',
+  };
 
   constructor(private pokeapi: Pokeapi) { }
 
@@ -70,7 +83,6 @@ export class PokemonListPage implements OnInit {
       return;
     }
 
-    // Ajusta el limit para no pasarte de 151
     const remaining = this.maxItems - this.pokemons.length;
     if (remaining <= 0) {
       this.allLoaded = true;
@@ -82,13 +94,20 @@ export class PokemonListPage implements OnInit {
     }
 
     const limit = Math.min(this.pageSize, remaining);
-
     this.loading = true;
 
     this.pokeapi.getPokemonList(limit, this.offset).subscribe({
       next: (res: PokemonListResponse) => {
-        this.pokemons = [...this.pokemons, ...res.results];
+        const newOnes: PokemonRow[] = res.results.map((r) => {
+          const id = this.getPokemonIdFromUrl(r.url);
+          return { ...r, id, types: [] };
+        });
+
+        this.pokemons = [...this.pokemons, ...newOnes];
         this.offset += limit;
+
+        // Cargar tipos (detalles) para los nuevos
+        this.loadTypesForBatch(newOnes);
 
         if (this.pokemons.length >= this.maxItems) {
           this.allLoaded = true;
@@ -106,7 +125,26 @@ export class PokemonListPage implements OnInit {
     });
   }
 
-  // "#001" desde la url
+  private loadTypesForBatch(batch: PokemonRow[]) {
+    // 151 pokemons = ok hacer requests por item para prueba
+    for (const p of batch) {
+      this.pokeapi.getPokemonDetailsById(p.id).subscribe({
+        next: (details: any) => {
+          const types = Array.isArray(details?.types)
+            ? details.types
+              .map((t: any) => t?.type?.name)
+              .filter((x: any) => typeof x === 'string')
+            : [];
+
+          p.types = types;
+        },
+        error: () => {
+          p.types = [];
+        }
+      });
+    }
+  }
+
   getPokemonIdFromUrl(url: string): number {
     const parts = url.split('/').filter(Boolean);
     const id = Number(parts[parts.length - 1]);
@@ -117,7 +155,13 @@ export class PokemonListPage implements OnInit {
     return `#${id.toString().padStart(3, '0')}`;
   }
 
-  getSpriteUrl(id: number): string {
-    return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/{id}.png`.replace('{id}', id.toString());
+  getOfficialArtworkUrl(id: number): string {
+    return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${id}.png`;
+  }
+
+  getTypeIconUrl(typeName: string): string {
+    const key = (typeName || '').toLowerCase();
+    const file = this.TYPE_ICON_MAP[key] ?? 'unknown';
+    return `assets/icon/pokemon-types/${file}.png`;
   }
 }

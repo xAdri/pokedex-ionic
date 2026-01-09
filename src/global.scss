@@ -57,3 +57,17 @@
 .font-secondary {
     font-family: 'AvenirBook', sans-serif;
 }
+
+.active-color {
+    color: #010000;
+
+}
+
+.inactive-color {
+    color: #9aad9b;
+}
+
+.gradient-background {
+    --background: linear-gradient(90deg, #e1ebfd 0%, #ddf7e1 100%);
+    --color: #ffffff;
+}

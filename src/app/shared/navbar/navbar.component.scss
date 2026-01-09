@@ -3,3 +3,52 @@
     display: flex;
     justify-content: space-around;
 }
+
+.nav-button {
+    height: 100%;
+    min-width: 64px;
+
+    --padding-start: 0;
+    --padding-end: 0;
+}
+
+.nav-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.nav-content ion-icon {
+    font-size: 22px;
+}
+
+/* Texto */
+.nav-text {
+    margin-top: 4px;
+    font-size: 12px;
+    line-height: 1;
+}
+
+
+/* Footer height */
+ion-toolbar {
+    --min-height: 64px;
+}
+
+/* Make icons/buttons readable */
+.gradient-background ion-button,
+.gradient-background ion-icon {
+    color: #010000;
+    // color: #9aad9b;
+}
+
+/* Optional: remove any default border/shadow line */
+ion-footer {
+    box-shadow: none;
+}
+
+ion-toolbar {
+    border-top: 4px solid transparent;
+    border-image: linear-gradient(to right, #729ef8, #59e162) 1;
+}

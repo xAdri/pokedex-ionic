@@ -20,6 +20,6 @@ import {
     IonButtons,
     IonButton,
     IonIcon
-  ],
+],
 })
 export class NavbarComponent { }
