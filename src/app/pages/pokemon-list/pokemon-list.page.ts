@@ -2,16 +2,15 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
-import { IonContent, IonHeader, IonTitle, IonToolbar, IonList, IonItem, IonLabel, IonInfiniteScroll, IonInfiniteScrollContent, IonNote, IonIcon, IonInput, IonSearchbar, IonButton, IonText } from '@ionic/angular/standalone';
+import { IonContent, IonHeader, IonToolbar, IonList, IonItem, IonLabel, IonInfiniteScroll, IonInfiniteScrollContent, IonNote, IonSearchbar, IonButton, IonText, IonButtons, IonModal, IonImg, IonProgressBar, IonSegment, IonSegmentButton, IonChip } from '@ionic/angular/standalone';
 
 import { NavbarComponent } from '../../shared/navbar/navbar.component';
 
 import { PokemonListItem, PokemonListResponse } from '../../core/interfaces/pokemon.interface';
 import { Pokeapi } from 'src/app/services/pokeapi';
 
-type PokemonRow = PokemonListItem & {
+type PokemonListRow = PokemonListItem & {
   id: number;
-  types: string[];
 };
 
 @Component({
@@ -33,11 +32,19 @@ type PokemonRow = PokemonListItem & {
     NavbarComponent,
     IonNote,
     IonSearchbar,
-    IonText
+    IonText,
+    IonButton,
+    IonButtons,
+    IonModal,
+    IonImg,
+    IonProgressBar,
+    IonSegment,
+    IonSegmentButton,
+    // IonChip
 ],
 })
 export class PokemonListPage implements OnInit {
-  pokemons: PokemonRow[] = [];
+  pokemons: PokemonListRow[] = [];
 
   private readonly pageSize = 25;
   private readonly maxItems = 1025;
@@ -67,7 +74,15 @@ export class PokemonListPage implements OnInit {
     fairy: 'fairy',
   };
 
+  isDetailOpen = false;
+  pokemonSelected: PokemonListRow | null = null;
+
   constructor(private pokeapi: Pokeapi) { }
+
+  showDetail(isOpen: boolean, p?: PokemonListRow) {
+    this.isDetailOpen = isOpen;
+    this.pokemonSelected = p || null;
+  }
 
   ngOnInit() {
     this.loadMore();
@@ -98,15 +113,14 @@ export class PokemonListPage implements OnInit {
 
     this.pokeapi.getPokemonList(limit, this.offset).subscribe({
       next: (res: PokemonListResponse) => {
-        const newOnes: PokemonRow[] = res.results.map((r) => {
+        const newOnes: PokemonListRow[] = res.results.map((r) => {
           const id = this.getPokemonIdFromUrl(r.url);
-          return { ...r, id, types: [] };
+          return { ...r, id, types: Array.isArray(r.types) ? r.types : [] };
         });
 
         this.pokemons = [...this.pokemons, ...newOnes];
         this.offset += limit;
 
-        // Cargar tipos (detalles) para los nuevos
         this.loadTypesForBatch(newOnes);
 
         if (this.pokemons.length >= this.maxItems) {
@@ -125,9 +139,12 @@ export class PokemonListPage implements OnInit {
     });
   }
 
-  private loadTypesForBatch(batch: PokemonRow[]) {
-    // 151 pokemons = ok hacer requests por item para prueba
+  private loadTypesForBatch(batch: PokemonListRow[]) {
     for (const p of batch) {
+      if (Array.isArray(p.types) && p.types.length > 0) {
+        continue;
+      }
+
       this.pokeapi.getPokemonDetailsById(p.id).subscribe({
         next: (details: any) => {
           const types = Array.isArray(details?.types)

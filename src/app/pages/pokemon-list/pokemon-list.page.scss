@@ -1,9 +1,9 @@
 .info-item {
     display: flex;
     flex-direction: column;
-    align-items: left;
+    align-items: flex-start;
     justify-content: center;
-    margin: 8px 0px;
+    margin: 8px 0;
 }
 
 .pokemon-image {
@@ -20,7 +20,6 @@
     height: 90%;
     object-fit: contain;
 }
-
 
 .pokemon-types {
     display: flex;
@@ -47,19 +46,96 @@
     margin-top: 16px;
 }
 
-.pill-search {
-    text-align: left;
-    border-radius: 50px;
-}
-
 ion-toolbar {
     border-bottom: 4px solid transparent;
     border-image: linear-gradient(to right, #729ef8, #59e162) 1;
 }
 
 .pill-search {
-  color: #000;
-  border-radius: 999px;
-  box-shadow: none;
-  text-align: left;
+    text-align: left;
+    border-radius: 50px;
+
+    --color: #000;
+    --border-radius: 999px;
+    --box-shadow: none;
+    --text-align: left;
+}
+
+:global(.pokemon-detail-modal) {
+    --width: 100%;
+    --height: 100%;
+    --border-radius: 0;
+}
+
+/* Fondo gris */
+.detail-bg {
+    --background: #7b7f8b;
+}
+
+/* Toolbar transparente */
+.detail-toolbar {
+    --background: transparent;
+    --color: #ffffff;
+}
+
+/* Imagen centrada arriba */
+.artwork-wrap {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    position: relative;
+    z-index: 2;
+}
+
+.artwork {
+    width: 180px;
+    height: 180px;
+}
+
+/* Tarjeta blanca */
+.sheet {
+    background: #ffffff;
+    margin-top: -20px;
+    border-top-left-radius: 28px;
+    border-top-right-radius: 28px;
+    padding: 20px;
+    min-height: calc(100vh - 260px);
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.detail-name {
+    font-size: 32px;
+    text-align: center;
+    color: #333333;
+}
+
+.detail-type-row {
+    display: flex;
+    justify-content: center;
+}
+
+.detail-desc {
+    text-align: center;
+    font-size: 13px;
+    line-height: 1.4;
+}
+
+.stats-list ion-item {
+    --inner-padding-end: 0;
+    --padding-start: 0;
+    flex-direction: column;
+    align-items: stretch;
+}
+
+.stats-list ion-label,
+.stats-list ion-note {
+    font-size: 12px;
+}
+
+.stats-list ion-progress-bar {
+    margin-top: 6px;
+    height: 8px;
+    border-radius: 999px;
 }

@@ -10,6 +10,10 @@ export const routes: Routes = [
     loadComponent: () => import('./pages/pokemon-list/pokemon-list.page').then(m => m.PokemonListPage)
   },
   {
+    path: 'minigame',
+    loadComponent: () => import('./pages/minigame/minigame.page').then(m => m.MinigamePage)
+  },
+  {
     path: '',
     redirectTo: 'home',
     pathMatch: 'full',
@@ -17,9 +21,5 @@ export const routes: Routes = [
   {
     path: '**',
     redirectTo: 'home'
-  },
-  {
-    path: 'minigame',
-    loadComponent: () => import('./pages/minigame/minigame.page').then( m => m.MinigamePage)
   },
 ];

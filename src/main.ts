@@ -31,7 +31,8 @@ addIcons({
   'list-outline': listOutline,
   'restaurant-outline': restaurantOutline,
   'heart-outline': heartOutline,
-  'person-outline': personOutline
+  'person-outline': personOutline,
+  'arrow-down-outline': arrowBackOutline
 });
 
 bootstrapApplication(AppComponent, {
