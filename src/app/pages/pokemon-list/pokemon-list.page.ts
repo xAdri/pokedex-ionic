@@ -6,7 +6,7 @@ import { IonContent, IonHeader, IonToolbar, IonList, IonItem, IonLabel, IonInfin
 
 import { NavbarComponent } from '../../shared/navbar/navbar.component';
 
-import { PokemonListItem, PokemonListResponse } from '../../core/interfaces/pokemon.interface';
+import { PokemonListItem, PokemonListResponse, PokemonDetailItem } from '../../core/interfaces/pokemon.interface';
 import { Pokeapi } from 'src/app/services/pokeapi';
 
 type PokemonListRow = PokemonListItem & {
@@ -41,13 +41,14 @@ type PokemonListRow = PokemonListItem & {
     IonSegment,
     IonSegmentButton,
     // IonChip
-],
+  ],
 })
 export class PokemonListPage implements OnInit {
   pokemons: PokemonListRow[] = [];
 
   private readonly pageSize = 25;
   private readonly maxItems = 1025;
+  readonly maxStat = 255;
 
   private offset = 0;
   allLoaded = false;
@@ -75,13 +76,90 @@ export class PokemonListPage implements OnInit {
   };
 
   isDetailOpen = false;
+  isDetailLoading = false;
   pokemonSelected: PokemonListRow | null = null;
+  pokemonDetail: PokemonDetailItem | null = null;
 
   constructor(private pokeapi: Pokeapi) { }
 
   showDetail(isOpen: boolean, p?: PokemonListRow) {
     this.isDetailOpen = isOpen;
-    this.pokemonSelected = p || null;
+    this.pokemonSelected = p ?? null;
+
+    if (!isOpen || !p) {
+      this.pokemonDetail = null;
+      this.isDetailLoading = false;
+      return;
+    }
+
+    this.isDetailLoading = true;
+    this.pokemonDetail = null;
+
+    this.pokeapi.getPokemonDetailsById(p.id).subscribe({
+      next: (details: any) => {
+        const types: string[] = Array.isArray(details?.types)
+          ? details.types.map((t: any) => t?.type?.name).filter((x: any) => typeof x === 'string')
+          : [];
+
+        const statsArr: any[] = Array.isArray(details?.stats) ? details.stats : [];
+        const getStat = (name: string): number =>
+          Number(statsArr.find((s: any) => s?.stat?.name === name)?.base_stat ?? 0);
+
+        const speciesUrl: string | undefined = details?.species?.url;
+
+        if (!speciesUrl) {
+          this.finishDetail(details, types, getStat, '');
+          return;
+        }
+
+        // Segunda llamada para la descripcion
+        this.pokeapi.getByUrl(speciesUrl).subscribe({
+          next: (species: any) => {
+            const entries: any[] = Array.isArray(species?.flavor_text_entries)
+              ? species.flavor_text_entries
+              : [];
+
+            const enEntry = entries.find((e) => e?.language?.name === 'en');
+            const description = typeof enEntry?.flavor_text === 'string'
+              ? enEntry.flavor_text.replace(/\f|\n/g, ' ')
+              : '';
+
+            this.finishDetail(details, types, getStat, description);
+          },
+          error: () => {
+            this.finishDetail(details, types, getStat, '');
+          }
+        });
+      },
+      error: () => {
+        this.pokemonDetail = null;
+        this.isDetailLoading = false;
+      }
+    });
+  }
+
+  private finishDetail(
+    details: any,
+    types: string[],
+    getStat: (name: string) => number,
+    description: string
+  ) {
+    this.pokemonDetail = {
+      id: Number(details?.id),
+      name: String(details?.name),
+      types,
+      description,
+      stats: {
+        hp: getStat('hp'),
+        attack: getStat('attack'),
+        defense: getStat('defense'),
+        specialAttack: getStat('special-attack'),
+        specialDefense: getStat('special-defense'),
+        speed: getStat('speed'),
+      },
+    };
+
+    this.isDetailLoading = false;
   }
 
   ngOnInit() {

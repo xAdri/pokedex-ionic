@@ -101,41 +101,41 @@
           </ion-segment>
 
           <!-- Stats -->
-          <ion-list lines="none" class="stats-list">
+          <ion-list>
             <ion-item>
               <ion-label>HP</ion-label>
-              <ion-note slot="end">160</ion-note>
-              <ion-progress-bar [value]="160 / 200"></ion-progress-bar>
+              <ion-note slot="end">{{ pokemonDetail?.stats?.hp ?? 0 }}</ion-note>
+              <ion-progress-bar [value]="(pokemonDetail?.stats?.hp ?? 0) / maxStat"></ion-progress-bar>
             </ion-item>
 
             <ion-item>
               <ion-label>ATK</ion-label>
-              <ion-note slot="end">160</ion-note>
-              <ion-progress-bar [value]="160 / 200"></ion-progress-bar>
+              <ion-note slot="end">{{ pokemonDetail?.stats?.attack ?? 0 }}</ion-note>
+              <ion-progress-bar [value]="(pokemonDetail?.stats?.attack ?? 0) / maxStat"></ion-progress-bar>
             </ion-item>
 
             <ion-item>
               <ion-label>DEF</ion-label>
-              <ion-note slot="end">160</ion-note>
-              <ion-progress-bar [value]="160 / 200"></ion-progress-bar>
+              <ion-note slot="end">{{ pokemonDetail?.stats?.defense ?? 0 }}</ion-note>
+              <ion-progress-bar [value]="(pokemonDetail?.stats?.defense ?? 0) / maxStat"></ion-progress-bar>
             </ion-item>
 
             <ion-item>
               <ion-label>SATK</ion-label>
-              <ion-note slot="end">160</ion-note>
-              <ion-progress-bar [value]="160 / 200"></ion-progress-bar>
+              <ion-note slot="end">{{ pokemonDetail?.stats?.specialAttack ?? 0 }}</ion-note>
+              <ion-progress-bar [value]="(pokemonDetail?.stats?.specialAttack ?? 0) / maxStat"></ion-progress-bar>
             </ion-item>
 
             <ion-item>
               <ion-label>SDEF</ion-label>
-              <ion-note slot="end">160</ion-note>
-              <ion-progress-bar [value]="160 / 200"></ion-progress-bar>
+              <ion-note slot="end">{{ pokemonDetail?.stats?.specialDefense ?? 0 }}</ion-note>
+              <ion-progress-bar [value]="(pokemonDetail?.stats?.specialDefense ?? 0) / maxStat"></ion-progress-bar>
             </ion-item>
 
             <ion-item>
               <ion-label>SPD</ion-label>
-              <ion-note slot="end">160</ion-note>
-              <ion-progress-bar [value]="160 / 200"></ion-progress-bar>
+              <ion-note slot="end">{{ pokemonDetail?.stats?.speed ?? 0 }}</ion-note>
+              <ion-progress-bar [value]="(pokemonDetail?.stats?.speed ?? 0) / maxStat"></ion-progress-bar>
             </ion-item>
           </ion-list>
 

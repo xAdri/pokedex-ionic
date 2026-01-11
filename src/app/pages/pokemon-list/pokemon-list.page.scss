@@ -69,7 +69,7 @@ ion-toolbar {
 
 /* Fondo gris */
 .detail-bg {
-    --background: #7b7f8b;
+    --background: #5a5a5a;
 }
 
 /* Toolbar transparente */
@@ -95,7 +95,7 @@ ion-toolbar {
 /* Tarjeta blanca */
 .sheet {
     background: #ffffff;
-    margin-top: -20px;
+    margin-top: -46px;
     border-top-left-radius: 28px;
     border-top-right-radius: 28px;
     padding: 20px;
@@ -103,12 +103,6 @@ ion-toolbar {
     display: flex;
     flex-direction: column;
     gap: 14px;
-}
-
-.detail-name {
-    font-size: 32px;
-    text-align: center;
-    color: #333333;
 }
 
 .detail-type-row {
@@ -138,4 +132,5 @@ ion-toolbar {
     margin-top: 6px;
     height: 8px;
     border-radius: 999px;
+    --progress-background: var(--ion-color-primary, #8ce900);
 }

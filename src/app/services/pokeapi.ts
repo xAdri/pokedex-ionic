@@ -28,4 +28,8 @@ export class Pokeapi {
     return this.http.get<any>(url);
   }
 
+  getByUrl(url: string) {
+    return this.http.get(url);
+  }
+
 }

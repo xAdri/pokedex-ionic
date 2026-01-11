@@ -4,17 +4,21 @@ export interface PokemonListItem {
     url: string;
 }
 
+export interface PokemonStats {
+    hp: number;
+    attack: number;
+    defense: number;
+    specialAttack: number;
+    specialDefense: number;
+    speed: number;
+}
+
 export interface PokemonDetailItem {
-  id: number;
-  name: string;
-  types: string[];
-  description: string;
-  hp: number;
-  attack: number;
-  defense: number;
-  specialAttack: number;
-  specialDefense: number;
-  speed: number;
+    id: number;
+    name: string;
+    types: string[];
+    description: string;
+    stats: PokemonStats;
 }
 
 export interface PokemonListResponse {
