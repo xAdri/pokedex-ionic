@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
-import { IonContent, IonHeader, IonToolbar, IonList, IonItem, IonLabel, IonInfiniteScroll, IonInfiniteScrollContent, IonNote, IonSearchbar, IonButton, IonText, IonButtons, IonModal, IonImg, IonProgressBar, IonSegment, IonSegmentButton, IonChip } from '@ionic/angular/standalone';
+import { IonContent, IonHeader, IonToolbar, IonList, IonItem, IonLabel, IonInfiniteScroll, IonInfiniteScrollContent, IonNote, IonSearchbar, IonButton, IonText, IonButtons, IonModal, IonImg, IonProgressBar, IonSegment, IonSegmentButton, IonChip, IonIcon } from '@ionic/angular/standalone';
 
 import { NavbarComponent } from '../../shared/navbar/navbar.component';
 
@@ -40,8 +40,8 @@ type PokemonListRow = PokemonListItem & {
     IonProgressBar,
     IonSegment,
     IonSegmentButton,
-    // IonChip
-  ],
+    IonIcon
+],
 })
 export class PokemonListPage implements OnInit {
   pokemons: PokemonListRow[] = [];
