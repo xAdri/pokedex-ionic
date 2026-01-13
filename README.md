@@ -11,7 +11,7 @@ Este proyecto es una aplicación de Pokedex que permite a los usuarios explorar 
 ## Instalación
 1. Clona el repositorio:
    ```bash
-   git clone https://github.com/tu_usuario/pokedex.git
+   git clone https://github.com/xAdri/pokedex.git
    cd pokedex
    ```
 2. Instala las dependencias:
@@ -78,9 +78,5 @@ Las contribuciones son bienvenidas. Si deseas contribuir, por favor sigue estos 
 
 ## Licencia
 Este proyecto está bajo la Licencia MIT. Para más detalles, consulta el archivo LICENSE.
-
-## Contacto
-Para más información, puedes contactar a:
-- Tu Nombre - tu_email@example.com
 
 ---
