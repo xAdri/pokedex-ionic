@@ -46,7 +46,7 @@
     margin-top: 16px;
 }
 
-ion-toolbar {
+.main-toolbar {
     border-bottom: 4px solid transparent;
     border-image: linear-gradient(to right, #729ef8, #59e162) 1;
 }
@@ -132,5 +132,160 @@ ion-toolbar {
     margin-top: 6px;
     height: 8px;
     border-radius: 999px;
-    --progress-background: var(--ion-color-primary, #8ce900);
+    --progress-background: var(--ion-color-primary, #8ce900); // fix
+}
+
+.pokemon-detail-modal .name {
+    display: block;
+    text-align: center;
+    font-size: 34px;
+    margin-top: 1.5rem;
+}
+
+.pokemon-detail-modal .type-row {
+    justify-content: center;
+    align-self: center;
+}
+
+.pokemon-detail-modal .type-row ion-chip {
+    --background: #5b5b5b;
+    --color: #ffffff;
+    border-radius: 999px;
+    padding: 6px 14px;
+    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.12);
+    
+}
+
+.pokemon-detail-modal .desc {
+    text-align: center;
+    line-height: 1.45;
+    color: #8a8a8a;
+    margin-top: 2px;
+}
+
+/* ----------------------------
+   Tabs Material estilo pill (como la foto)
+   Sin banda gris detras
+   ---------------------------- */
+
+.pokemon-detail-modal .detail-tabs .mat-mdc-tab-header {
+    border-bottom: 0 !important;
+    margin-top: 6px;
+    margin-bottom: 10px;
+}
+
+/* Centrado, sin fondo */
+.pokemon-detail-modal .detail-tabs .mat-mdc-tab-labels {
+    justify-content: center;
+    background: transparent !important;
+    padding: 0 !important;
+    gap: 18px;
+}
+
+/* Quita underline */
+.pokemon-detail-modal .detail-tabs .mdc-tab-indicator {
+    display: none !important;
+}
+
+/* Tamaño de cada tab */
+.pokemon-detail-modal .detail-tabs .mat-mdc-tab {
+    min-width: auto !important;
+    padding: 0 !important;
+    height: auto !important;
+}
+
+/* Inactiva: texto gris, sin pill */
+.pokemon-detail-modal .detail-tabs .mat-mdc-tab .mdc-tab__content {
+    padding: 10px 0;
+    border-radius: 999px;
+}
+
+.pokemon-detail-modal .detail-tabs .mat-mdc-tab .mdc-tab__text-label {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.6px;
+    color: #8b8b8b;
+}
+
+/* Activa: pill oscuro con sombra */
+.pokemon-detail-modal .detail-tabs .mat-mdc-tab.mdc-tab--active .mdc-tab__content {
+    background: #5b5b5b;
+    padding: 10px 22px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.16);
+}
+
+.pokemon-detail-modal .detail-tabs .mat-mdc-tab.mdc-tab--active .mdc-tab__text-label {
+    color: #ffffff;
+}
+
+/* ----------------------------
+   Stats: fila (label + 000 + barra)
+   ---------------------------- */
+
+.pokemon-detail-modal .stats-list {
+    padding: 0;
+    margin: 0;
+}
+
+/* Quitar lineas y compactar */
+.pokemon-detail-modal .stats-item {
+    --padding-start: 0;
+    --inner-padding-end: 0;
+    --background: transparent;
+
+    --border-width: 0;
+    --inner-border-width: 0;
+    --border-color: transparent;
+}
+
+/* ESTA es la clave para que sea en una sola linea */
+.pokemon-detail-modal .stats-item::part(native) {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 8px 0;
+}
+
+/* Label izquierda */
+.pokemon-detail-modal .stats-label {
+    width: 44px;
+    min-width: 44px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.4px;
+    color: #6f6f6f;
+}
+
+/* Valor "000" al lado */
+.pokemon-detail-modal .stats-note {
+    width: 34px;
+    min-width: 34px;
+    text-align: right;
+    font-size: 12px;
+    font-weight: 700;
+    color: #b0b0b0;
+    margin: 0;
+}
+
+/* Barra a la derecha ocupando el resto */
+.pokemon-detail-modal .stats-bar {
+    flex: 1;
+    margin: 0;
+    height: 6px;
+    border-radius: 999px;
+
+    /* gris claro fondo + gris oscuro progreso */
+    --background: #e9e9e9;
+    --progress-background: #5b5b5b;
+}
+
+/* Redondeo real dentro del progress bar */
+.pokemon-detail-modal .stats-bar::part(stream),
+.pokemon-detail-modal .stats-bar::part(progress) {
+    border-radius: 999px;
+}
+
+/* Contenido otras tabs */
+.pokemon-detail-modal .tab-content {
+    padding: 10px 0;
 }

@@ -19,7 +19,8 @@ import {
   listOutline,
   restaurantOutline,
   heartOutline,
-  personOutline
+  personOutline,
+  chevronDownOutline
 } from 'ionicons/icons';
 
 import { routes } from './app/app.routes';
@@ -32,7 +33,7 @@ addIcons({
   'restaurant-outline': restaurantOutline,
   'heart-outline': heartOutline,
   'person-outline': personOutline,
-  'arrow-down-outline': arrowBackOutline
+  'chevron-down-outline': chevronDownOutline,
 });
 
 bootstrapApplication(AppComponent, {

@@ -8,6 +8,7 @@ import { NavbarComponent } from '../../shared/navbar/navbar.component';
 
 import { PokemonListItem, PokemonListResponse, PokemonDetailItem } from '../../core/interfaces/pokemon.interface';
 import { Pokeapi } from 'src/app/services/pokeapi';
+import { MatTabsModule, MatTab, MatTabGroup } from '@angular/material/tabs';
 
 type PokemonListRow = PokemonListItem & {
   id: number;
@@ -38,9 +39,10 @@ type PokemonListRow = PokemonListItem & {
     IonModal,
     IonImg,
     IonProgressBar,
-    IonSegment,
-    IonSegmentButton,
-    IonIcon
+    IonIcon,
+    IonChip,
+    MatTab,
+    MatTabGroup
 ],
 })
 export class PokemonListPage implements OnInit {
@@ -75,6 +77,7 @@ export class PokemonListPage implements OnInit {
     fairy: 'fairy',
   };
 
+  selectedTabIndex = 0;
   isDetailOpen = false;
   isDetailLoading = false;
   pokemonSelected: PokemonListRow | null = null;
@@ -144,6 +147,8 @@ export class PokemonListPage implements OnInit {
     getStat: (name: string) => number,
     description: string
   ) {
+
+    console.log(description);
     this.pokemonDetail = {
       id: Number(details?.id),
       name: String(details?.name),

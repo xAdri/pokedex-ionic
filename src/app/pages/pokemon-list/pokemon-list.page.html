@@ -1,5 +1,5 @@
 <ion-header [translucent]="true">
-  <ion-toolbar class="gradient-background">
+  <ion-toolbar class="gradient-background main-toolbar">
     <div class="header-column">
       <ion-text class="font-secondary active-color header-title">
         Pokemon
@@ -54,7 +54,7 @@
         <ion-toolbar class="detail-toolbar">
           <ion-buttons slot="start">
             <ion-button fill="clear" (click)="showDetail(false)">
-              <ion-icon name="chevron-down"></ion-icon>
+              <ion-icon name="chevron-down-outline"></ion-icon>
             </ion-button>
           </ion-buttons>
         </ion-toolbar>
@@ -72,80 +72,86 @@
           </ion-text>
 
           <!-- Tipo -->
-          <!-- <div class="type-row">
-            <ion-chip color="dark">
-              <ion-label>{{ pokemonSelected?.types?.[0] | uppercase }}</ion-label>
-            </ion-chip>
-          </div> -->
-          <div class="pokemon-types">
+          <div class="type-row">
             @for (t of pokemonSelected?.types; track t) {
-            <img class="type-icon" [src]="getTypeIconUrl(t)" [alt]="t" />
+            <ion-chip color="dark">
+              <ion-label>{{ t | uppercase }}</ion-label>
+            </ion-chip>
             }
           </div>
 
           <!-- Descripcion -->
           <ion-text class="desc font-secondary">
-            <!-- {{ pokemonSelected?.description }} -->
-            A strange seed was planted on its back at birth. The plant sprouts and grows with this Pokémon.
+            {{ pokemonDetail?.description }}
           </ion-text>
 
-          <!-- Tabs -->
-          <ion-segment value="stats">
-            <ion-segment-button value="stats">
-              <ion-label>STATS</ion-label>
-            </ion-segment-button>
-            <ion-segment-button value="evo">
-              <ion-label>EVOLUTIONS</ion-label>
-            </ion-segment-button>
-            <ion-segment-button value="moves">
-              <ion-label>MOVES</ion-label>
-            </ion-segment-button>
-          </ion-segment>
+          <!-- Tabs (Angular Material) -->
+          <mat-tab-group class="detail-tabs" [(selectedIndex)]="selectedTabIndex">
 
-          <!-- Stats -->
-          <ion-list>
-            <ion-item>
-              <ion-label>HP</ion-label>
-              <ion-note slot="end">{{ pokemonDetail?.stats?.hp ?? 0 }}</ion-note>
-              <ion-progress-bar [value]="(pokemonDetail?.stats?.hp ?? 0) / maxStat"></ion-progress-bar>
-            </ion-item>
+            <mat-tab label="STATS">
+              <!-- Stats (Ionic, sin cambios) -->
+              <ion-list class="stats-list">
+                <ion-item class="stats-item">
+                  <ion-label class="stats-label">HP</ion-label>
+                  <ion-note class="stats-note" slot="end">{{ pokemonDetail?.stats?.hp ?? 0 }}</ion-note>
+                  <ion-progress-bar class="stats-bar"
+                    [value]="(pokemonDetail?.stats?.hp ?? 0) / maxStat"></ion-progress-bar>
+                </ion-item>
 
-            <ion-item>
-              <ion-label>ATK</ion-label>
-              <ion-note slot="end">{{ pokemonDetail?.stats?.attack ?? 0 }}</ion-note>
-              <ion-progress-bar [value]="(pokemonDetail?.stats?.attack ?? 0) / maxStat"></ion-progress-bar>
-            </ion-item>
+                <ion-item class="stats-item">
+                  <ion-label class="stats-label">ATK</ion-label>
+                  <ion-note class="stats-note" slot="end">{{ pokemonDetail?.stats?.attack ?? 0 }}</ion-note>
+                  <ion-progress-bar class="stats-bar"
+                    [value]="(pokemonDetail?.stats?.attack ?? 0) / maxStat"></ion-progress-bar>
+                </ion-item>
 
-            <ion-item>
-              <ion-label>DEF</ion-label>
-              <ion-note slot="end">{{ pokemonDetail?.stats?.defense ?? 0 }}</ion-note>
-              <ion-progress-bar [value]="(pokemonDetail?.stats?.defense ?? 0) / maxStat"></ion-progress-bar>
-            </ion-item>
+                <ion-item class="stats-item">
+                  <ion-label class="stats-label">DEF</ion-label>
+                  <ion-note class="stats-note" slot="end">{{ pokemonDetail?.stats?.defense ?? 0 }}</ion-note>
+                  <ion-progress-bar class="stats-bar"
+                    [value]="(pokemonDetail?.stats?.defense ?? 0) / maxStat"></ion-progress-bar>
+                </ion-item>
 
-            <ion-item>
-              <ion-label>SATK</ion-label>
-              <ion-note slot="end">{{ pokemonDetail?.stats?.specialAttack ?? 0 }}</ion-note>
-              <ion-progress-bar [value]="(pokemonDetail?.stats?.specialAttack ?? 0) / maxStat"></ion-progress-bar>
-            </ion-item>
+                <ion-item class="stats-item">
+                  <ion-label class="stats-label">SATK</ion-label>
+                  <ion-note class="stats-note" slot="end">{{ pokemonDetail?.stats?.specialAttack ?? 0 }}</ion-note>
+                  <ion-progress-bar class="stats-bar"
+                    [value]="(pokemonDetail?.stats?.specialAttack ?? 0) / maxStat"></ion-progress-bar>
+                </ion-item>
 
-            <ion-item>
-              <ion-label>SDEF</ion-label>
-              <ion-note slot="end">{{ pokemonDetail?.stats?.specialDefense ?? 0 }}</ion-note>
-              <ion-progress-bar [value]="(pokemonDetail?.stats?.specialDefense ?? 0) / maxStat"></ion-progress-bar>
-            </ion-item>
+                <ion-item class="stats-item">
+                  <ion-label class="stats-label">SDEF</ion-label>
+                  <ion-note class="stats-note" slot="end">{{ pokemonDetail?.stats?.specialDefense ?? 0 }}</ion-note>
+                  <ion-progress-bar class="stats-bar"
+                    [value]="(pokemonDetail?.stats?.specialDefense ?? 0) / maxStat"></ion-progress-bar>
+                </ion-item>
 
-            <ion-item>
-              <ion-label>SPD</ion-label>
-              <ion-note slot="end">{{ pokemonDetail?.stats?.speed ?? 0 }}</ion-note>
-              <ion-progress-bar [value]="(pokemonDetail?.stats?.speed ?? 0) / maxStat"></ion-progress-bar>
-            </ion-item>
-          </ion-list>
+                <ion-item class="stats-item">
+                  <ion-label class="stats-label">SPD</ion-label>
+                  <ion-note class="stats-note" slot="end">{{ pokemonDetail?.stats?.speed ?? 0 }}</ion-note>
+                  <ion-progress-bar class="stats-bar"
+                    [value]="(pokemonDetail?.stats?.speed ?? 0) / maxStat"></ion-progress-bar>
+                </ion-item>
+              </ion-list>
+            </mat-tab>
 
+            <mat-tab label="EVOLUTIONS">
+              <div class="tab-content">
+                <p>evoluciones</p>
+              </div>
+            </mat-tab>
+
+            <mat-tab label="MOVES">
+              <div class="tab-content">
+                <p>movimientos</p>
+              </div>
+            </mat-tab>
+
+          </mat-tab-group>
         </div>
       </ion-content>
     </ng-template>
   </ion-modal>
-
 </ion-content>
 
 <app-navbar></app-navbar>
